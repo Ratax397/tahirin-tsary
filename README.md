@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tahirin-tsary
 
-## Getting Started
+Mini‑projet de galerie d’articles/images avec authentification Google, publication d’articles, recherche, page détail et tableau de bord utilisateur.
 
-First, run the development server:
+## Fonctionnalités
+
+- **Authentification Google** via NextAuth
+- **Liste d’articles** (Firestore) avec **recherche** par mot‑clé
+- **Détail** d’un article `articles/[articleId]` (image, description, lien externe)
+- **Publication** d’un article via `articlebuilder` (upload **Cloudinary**)
+- **Dashboard utilisateur** `dashboard/[userId]` (profil connecté)
+
+## Stack
+
+- **Next.js (App Router)**, React
+- **Firebase Firestore** pour les données
+- **NextAuth** (provider Google)
+- **Cloudinary** pour l’upload d’images côté client
+- **Tailwind CSS v4** pour le style
+
+## Scripts
+
+- `npm run dev` — développement
+- `npm run build` — build
+- `npm start` — production
+
+## Prérequis
+
+- Node.js 18+
+- Comptes/services: **Google OAuth**, **Firebase (Firestore)**, **Cloudinary**
+
+## Installation
+
+1. Installer les dépendances:
+   ```bash
+   npm install
+   ```
+2. Créer `.env.local` à la racine:
+   ```bash
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   NEXTAUTH_SECRET=your_random_secret
+   NEXTAUTH_URL=http://localhost:3000
+
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_preset
+   ```
+3. Google OAuth: ajouter l’URI de redirection `http://localhost:3000/api/auth/callback/google`.
+4. Firebase: config dans `app/db/firebaseConfig.js` (utiliser vos clés publiques du projet). Collections: `post`, `user`.
+5. Cloudinary: créer un **upload preset non signé** pour les images.
+
+## Lancer
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# puis ouvrir http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure (extrait)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `app/page.jsx` — liste + recherche (`useSearchParams`)
+- `app/articles/[articleId]/page.jsx` — détail d’un article
+- `app/articlebuilder/page.jsx` — formulaire `FormAdd` (upload + Firestore)
+- `app/dashboard/[userId]/page.jsx` — profil `UserInfo`
+- `app/api/auth/[...nextauth]/route.js` — NextAuth (Google)
+- `app/Provider.jsx` — `SessionProvider` global
+- `next.config.ts` — domaines images autorisés (Google, Firebase, Cloudinary)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Données & Upload
 
-## Learn More
+- `post`: `title`, `desc`, `link`, `image`, `userName`, `userEmail`, `userImage`, `id`
+- `user`: `userEmail`, `userName`, `userImage`
+- Upload direct Cloudinary via `NEXT_PUBLIC_CLOUDINARY_*` (preset non signé)
 
-To learn more about Next.js, take a look at the following resources:
+## Déploiement (Vercel)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Définir les variables `.env` côté Vercel (mêmes clés que local)
+- `NEXTAUTH_URL` = URL de prod
+- Ajouter l’URI OAuth Google de prod
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Adapter les règles Firestore (lecture publique, écriture réservée aux utilisateurs authentifiés)
+- `next.config.ts` configure `images.remotePatterns` pour `googleusercontent`, `firebasestorage`, `res.cloudinary`

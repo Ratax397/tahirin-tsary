@@ -1,5 +1,9 @@
 # Tahirin-tsary
 
+[![Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=for-the-badge&logo=vercel)](https://tahirin-tsary-z6y3.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
+
 Mini‑projet de galerie d’articles/images avec authentification Google, publication d’articles, recherche, page détail et tableau de bord utilisateur.
 
 ## Fonctionnalités

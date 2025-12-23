@@ -1,8 +1,6 @@
 # Tahirin-tsary
 
-[![Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=for-the-badge&logo=vercel)](https://tahirin-tsary-z6y3.vercel.app/)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
+🌐 **[Voir la démo en ligne](https://tahirin-tsary-z6y3.vercel.app/)**
 
 Mini‑projet de galerie d’articles/images avec authentification Google, publication d’articles, recherche, page détail et tableau de bord utilisateur.
 
@@ -13,6 +11,7 @@ Mini‑projet de galerie d’articles/images avec authentification Google, publi
 - **Détail** d’un article `articles/[articleId]` (image, description, lien externe)
 - **Publication** d’un article via `articlebuilder` (upload **Cloudinary**)
 - **Dashboard utilisateur** `dashboard/[userId]` (profil connecté)
+- **🌐 [Démo en ligne](https://tahirin-tsary-z6y3.vercel.app/)**
 
 ## Stack
 
@@ -86,3 +85,6 @@ npm run dev
 
 - Adapter les règles Firestore (lecture publique, écriture réservée aux utilisateurs authentifiés)
 - `next.config.ts` configure `images.remotePatterns` pour `googleusercontent`, `firebasestorage`, `res.cloudinary`
+
+## 📄 Licence
+Licence MIT
